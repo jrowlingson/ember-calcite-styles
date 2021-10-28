@@ -3,7 +3,7 @@
 const concat = require('broccoli-concat')
 const funnel = require('broccoli-funnel')
 const merge = require('broccoli-merge-trees')
-const postcssFilter = require('./lib/postcss-filter')
+const tailwindFilter = require('./lib/tailwind-filter')
 const { mv } = require('broccoli-stew')
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
           overwrite: true,
         }
       )
-      return postcssFilter(
+      return tailwindFilter(
         merge(
           [
             stylesWithAddonCss,
