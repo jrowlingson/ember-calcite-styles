@@ -1,10 +1,9 @@
 'use strict';
 
 const concat = require('broccoli-concat')
-const funnel = require('broccoli-funnel')
+const filter = require('broccoli-funnel')
 const merge = require('broccoli-merge-trees')
 const tailwindFilter = require('./lib/tailwind-filter')
-const { mv } = require('broccoli-stew')
 
 module.exports = {
 
@@ -12,30 +11,42 @@ module.exports = {
 
   postprocessTree(type, tree) {
     if (type === 'css') {
+
       const stylesWithAddonCss = merge(
-        [tree, funnel(`${__dirname}/app/styles`, { destDir: 'assets' })],
+        [tree, filter(`${__dirname}/app/styles`, { destDir: 'assets' })],
         {
           overwrite: true,
         }
       )
-      return tailwindFilter(
-        merge(
-          [
-            stylesWithAddonCss,
-            mv(
-              concat(stylesWithAddonCss, {
-                inputFiles: ['assets/vendor.css'],
-                footerFiles: ['assets/ember-calcite-styles.css'],
-                outputFile: 'vendor.css',
-              }),
-              'assets'
+
+      return merge(
+        [
+          stylesWithAddonCss,
+          concat(
+            merge(
+              [
+                stylesWithAddonCss,
+                tailwindFilter(filter(stylesWithAddonCss, { include: [ 'assets/ember-calcite-styles.css' ]}))
+              ],
+              {
+                overwrite: true
+              }
             ),
-          ],
-          { overwrite: true }
-        )
+            {
+              inputFiles: [ 'assets/vendor.css' ],
+              footerFiles: [ 'assets/ember-calcite-styles.css' ],
+              outputFile: 'assets/vendor.css'
+            }
+          )
+        ],
+        {
+          overwrite: true
+        }
       )
     }
     return tree
-  },
+  }
 
 }
+
+
