@@ -35,7 +35,7 @@
     "ember-cli-htmlbars": "^5.7.1",
     "postcss": "^8.3.5",
     "tailwindcss": "^1.9.6",
-    "@esri/calcite-styles": "https://github.com/Esri/calcite-styles.git#sync-config"
+    "@esri/calcite-styles": "https://github.com/jrowlingson/calcite-styles.git#sync-config"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
