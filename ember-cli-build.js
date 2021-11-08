@@ -4,7 +4,20 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
-    // Add options here
+
+    'ember-calcite-styles': {
+      purge: {
+        content: [
+          './app/index.html',
+          './app/templates/**/*.hbs',
+          './app/components/**/*.hbs',
+          './addon/index.html',
+          './addon/templates/**/*.hbs',
+          './addon/components/**/*.hbs'
+        ]
+      },
+    }
+
   });
 
   /*
