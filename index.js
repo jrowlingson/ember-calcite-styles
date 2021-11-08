@@ -12,6 +12,7 @@ module.exports = {
   included(app) {
     this._super.included.apply(this, arguments)
     this.options = app.options['ember-calcite-styles']
+    console.log('debug: ecs opts', this.options)
   },
 
   postprocessTree(type, tree) {
